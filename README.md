@@ -11,15 +11,14 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 
-export OPENAI_API_KEY="..."
-export TAVILY_API_KEY="..."
-export OPENAI_MODEL="gpt-5-mini"  # optional
-export LANGSMITH_TRACING="true"   # optional
-export LANGSMITH_API_KEY="..."    # optional
-export LANGSMITH_PROJECT="job-research-agent"  # optional
+cp .env.example .env
+# Edit .env and set OPENAI_API_KEY and TAVILY_API_KEY
 
 python agent.py "Find Lead AI Engineer jobs in Bengaluru and explain the best matches"
 ```
+
+Configuration loads from `.env` via `python-dotenv`. Copy `.env.example` for every
+variable name and default; never commit `.env`.
 
 ## What to watch
 
