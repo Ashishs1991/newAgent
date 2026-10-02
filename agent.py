@@ -13,7 +13,7 @@ def main() -> None:
     agent = JobResearchAgent(settings)
     user_message = " ".join(sys.argv[1:])
     response = agent.run(user_message)
-    print(response.model_dump_json(indent=2))
+    print(response.response.model_dump_json(indent=2))
 
 
 if __name__ == "__main__":

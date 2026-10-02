@@ -1,3 +1,5 @@
+import time
+
 from langchain.agents import create_agent
 from langchain.agents.middleware import ModelCallLimitMiddleware, ToolCallLimitMiddleware
 from langchain_core.messages import AnyMessage, HumanMessage
@@ -5,6 +7,8 @@ from langchain_openai import ChatOpenAI
 from langchain_tavily import TavilySearch
 
 from job_research.prompts import load_system_prompt
+from job_research.run_metrics import collect_run_metrics
+from job_research.run_result import AgentRunResult
 from job_research.schema import JobSearchResponse
 from job_research.settings import Settings
 
@@ -59,7 +63,7 @@ class JobResearchAgent:
         return JobSearchResponse.model_validate(structured)
 
     def _finalize_from_transcript(self, messages: list[AnyMessage]) -> JobSearchResponse:
-        """Application fallback: one extra structured call if the loop ended without schema."""
+        """Extra model call outside agent middleware if the loop ended without schema."""
         model = self.create_model().with_structured_output(JobSearchResponse)
         synthesis = [
             *messages,
@@ -73,25 +77,39 @@ class JobResearchAgent:
         ]
         return model.invoke(synthesis)
 
-    def run(self, user_message: str) -> JobSearchResponse:
+    def run(self, user_message: str) -> AgentRunResult:
         self._settings.apply_langsmith_env()
         agent = self.create_langchain_agent()
+        started = time.perf_counter()
         result = agent.invoke(
             {"messages": [{"role": "user", "content": user_message}]}
         )
+        messages = list(result.get("messages", []))
         structured = result.get("structured_response")
+        used_fallback = False
+
         if structured is not None:
-            return self._coerce_structured(structured)
+            response = self._coerce_structured(structured)
+        else:
+            last_text = str(getattr(messages[-1], "content", "")) if messages else ""
+            if "limit" in last_text.lower() and "exceeded" in last_text.lower():
+                raise RuntimeError(
+                    "Agent hit MAX_MODEL_CALLS or MAX_TOOL_CALLS before structured output. "
+                    f"In .env try MAX_MODEL_CALLS=5 and MAX_TOOL_CALLS=2. Last message: {last_text}"
+                )
+            response = self._finalize_from_transcript(messages)
+            used_fallback = True
 
-        messages = result.get("messages", [])
-        last_text = ""
-        if messages:
-            last_text = str(getattr(messages[-1], "content", ""))
-
-        if "limit" in last_text.lower() and "exceeded" in last_text.lower():
-            raise RuntimeError(
-                "Agent hit MAX_MODEL_CALLS or MAX_TOOL_CALLS before structured output. "
-                f"In .env try MAX_MODEL_CALLS=5 and MAX_TOOL_CALLS=2. Last message: {last_text}"
-            )
-
-        return self._finalize_from_transcript(messages)
+        latency = time.perf_counter() - started
+        metrics = collect_run_metrics(
+            messages,
+            used_fallback_synthesis=used_fallback,
+            settings=self._settings,
+        )
+        return AgentRunResult(
+            response=response,
+            messages=tuple(messages),
+            latency_seconds=round(latency, 2),
+            used_fallback_synthesis=used_fallback,
+            metrics=metrics,
+        )

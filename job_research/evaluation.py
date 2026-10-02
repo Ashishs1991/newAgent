@@ -5,6 +5,17 @@ from job_research.schema import JobSearchResponse
 
 MAX_MATCHES = 5
 
+CAREER_HOST_OR_PATH_MARKERS = (
+    "careers.",
+    "jobs.",
+    "/careers",
+    "/jobs",
+    "myworkdayjobs.com",
+    "greenhouse.io",
+    "lever.co",
+    "ashbyhq.com",
+)
+
 
 @dataclass(frozen=True)
 class CheckResult:
@@ -23,6 +34,61 @@ class EvaluationReport:
         return all(check.passed for check in self.checks)
 
 
+@dataclass(frozen=True)
+class HeuristicReport:
+    """Lightweight signals — not a substitute for human quality review."""
+
+    query_id: str
+    checks: tuple[CheckResult, ...]
+
+
+def empty_manual_review_template() -> dict:
+    """Scores you fill after reading LangSmith + URLs (1–5 or pass/fail notes)."""
+    return {
+        "relevant_matches": None,
+        "listing_likely_open": None,
+        "source_supports_each_field": None,
+        "sensible_tool_choices": None,
+        "search_efficiency": None,
+        "grounded_in_evidence_not_full_jd": None,
+        "reviewer_notes": "",
+    }
+
+
+def is_likely_official_career_url(url: str) -> bool:
+    parsed = urlparse(url.strip().lower())
+    if not parsed.netloc:
+        return False
+    if "linkedin.com" in parsed.netloc:
+        return False
+    blob = f"{parsed.netloc}{parsed.path}"
+    return any(marker in blob for marker in CAREER_HOST_OR_PATH_MARKERS)
+
+
+def evaluate_heuristics(query_id: str, response: JobSearchResponse) -> HeuristicReport:
+    checks: list[CheckResult] = []
+    if not response.matches:
+        checks.append(
+            CheckResult(
+                name="official_career_page_ratio",
+                passed=False,
+                detail="no matches to score",
+            )
+        )
+        return HeuristicReport(query_id=query_id, checks=tuple(checks))
+
+    official = sum(1 for m in response.matches if is_likely_official_career_url(m.source_url))
+    ratio = official / len(response.matches)
+    checks.append(
+        CheckResult(
+            name="official_career_page_ratio",
+            passed=ratio >= 0.5,
+            detail=f"{official}/{len(response.matches)} URLs look like company career pages",
+        )
+    )
+    return HeuristicReport(query_id=query_id, checks=tuple(checks))
+
+
 def _normalize_url(url: str) -> str:
     parsed = urlparse(url.strip().lower())
     path = parsed.path.rstrip("/")
@@ -30,7 +96,7 @@ def _normalize_url(url: str) -> str:
 
 
 def evaluate_response(query_id: str, response: JobSearchResponse) -> EvaluationReport:
-    """Deterministic checks for structured job output (no LLM judge)."""
+    """Deterministic structural checks (shape and hygiene — not LLM quality)."""
     checks: list[CheckResult] = []
 
     count = len(response.matches)

@@ -1,0 +1,118 @@
+{
+  "query_id": "bengaluru-lead-ai",
+  "query": "Lead AI Engineer roles in Bengaluru with company career page links.",
+  "structural_pass": true,
+  "structural_checks": [
+    {
+      "name": "match_count_within_limit",
+      "passed": true,
+      "detail": "4 matches (max 5)"
+    },
+    {
+      "name": "each_match_has_http_source",
+      "passed": true,
+      "detail": "all URLs valid"
+    },
+    {
+      "name": "no_duplicate_source_urls",
+      "passed": true,
+      "detail": "0 duplicate URL(s) after normalization"
+    },
+    {
+      "name": "required_fields_present",
+      "passed": true,
+      "detail": "ok"
+    },
+    {
+      "name": "query_summary_present",
+      "passed": true,
+      "detail": "Search for Lead AI Engineer roles based in Bengaluru (Bangalore), India, priorit..."
+    }
+  ],
+  "heuristic_checks": [
+    {
+      "name": "official_career_page_ratio",
+      "passed": true,
+      "detail": "4/4 URLs look like company career pages"
+    }
+  ],
+  "metrics": {
+    "latency_seconds": 16.92,
+    "agent_model_calls": 2,
+    "agent_tool_calls": 1,
+    "fallback_synthesis_calls": 0,
+    "used_fallback_synthesis": false,
+    "total_input_tokens": 4847,
+    "total_output_tokens": 835,
+    "total_tokens": 5682,
+    "approximate_openai_usd_agent_loop_only": null,
+    "cost_note": "USD estimate covers token usage on agent-loop AIMessages only; fallback synthesis and Tavily are extra. Set OPENAI_INPUT_USD_PER_1M in .env for estimates."
+  },
+  "response": {
+    "query_summary": "Search for Lead AI Engineer roles based in Bengaluru (Bangalore), India, prioritizing company career pages (official careers sites). Excluded LinkedIn; focused on public company job postings and career pages.",
+    "matches": [
+      {
+        "title": "Lead AI Engineer",
+        "company": "athenahealth",
+        "location": "Bengaluru, Karn\u0101taka, India",
+        "source_url": "https://careers.athenahealth.com/us/en/job/R15450/Lead-AI-Engineer",
+        "match_reason": "Job posting on athenahealth's official careers site explicitly lists 'Lead AI Engineer' and states Bengaluru as the location.",
+        "uncertain_fields": [
+          "posting_date",
+          "remote vs on-site policy (hybrid details)",
+          "salary / compensation"
+        ]
+      },
+      {
+        "title": "Lead AI Engineer - Advanced AI",
+        "company": "Target",
+        "location": "Bangalore (Tower 02, Manyata Embassy Business Park), India",
+        "source_url": "https://indiajobs.target.com/job/bengaluru/lead-ai-engineer-advanced-ai/34386/96308747920",
+        "match_reason": "Official Target careers page (India site) lists 'Lead AI Engineer - Advanced AI' with Bangalore location and job details matching senior AI engineering responsibilities.",
+        "uncertain_fields": [
+          "posting_date",
+          "team / org reporting line",
+          "salary / compensation"
+        ]
+      },
+      {
+        "title": "Lead AI Engineer",
+        "company": "Capital One",
+        "location": "Bengaluru, India",
+        "source_url": "https://www.capitalonecareers.com/job/bengaluru/lead-ai-engineer/1732/98563866192",
+        "match_reason": "Capital One's careers site lists a 'Lead AI Engineer' opening with Bengaluru as the primary address and detailed AI/ML requirements.",
+        "uncertain_fields": [
+          "posting_date (site shows a future/posted date)",
+          "remote vs on-site expectations",
+          "salary / compensation"
+        ]
+      },
+      {
+        "title": "Lead AI Engineer",
+        "company": "Baker Hughes",
+        "location": "Bangalore, Karn\u0101taka, India",
+        "source_url": "https://careers.bakerhughes.com/global/en/job/R165592/Lead-AI-Engineer",
+        "match_reason": "Baker Hughes' official careers site contains a 'Lead AI Engineer' job listing specifying Bangalore as the location.",
+        "uncertain_fields": [
+          "posting_date",
+          "remote vs on-site policy",
+          "salary / compensation"
+        ]
+      }
+    ],
+    "notes": "I searched company career pages and major employer career portals. I excluded LinkedIn and aggregated job boards where possible. Some postings are on regional career microsites (e.g., Target India). If you want, I can (A) verify current posting status and recent posting dates, (B) search more companies (startups, Indian-headquartered firms), or (C) broaden to senior/engineering manager AI roles."
+  },
+  "manual_review": {
+    "relevant_matches": null,
+    "listing_likely_open": null,
+    "source_supports_each_field": null,
+    "sensible_tool_choices": null,
+    "search_efficiency": null,
+    "grounded_in_evidence_not_full_jd": null,
+    "reviewer_notes": ""
+  },
+  "langsmith": {
+    "project": "job-research-agent",
+    "hint": "Open this run in LangSmith and paste run URL into manual_review.reviewer_notes"
+  }
+}

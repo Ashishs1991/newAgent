@@ -96,8 +96,8 @@ def main() -> None:
     total = 0
     for item in queries[: max(args.limit, 0)]:
         total += 1
-        response = agent.run(item["query"])
-        if print_report(item["id"], response):
+        run = agent.run(item["query"])
+        if print_report(item["id"], run.response):
             passed += 1
 
     print(f"\nSummary: {passed}/{total} queries passed all deterministic checks.")

@@ -1,0 +1,569 @@
+{
+  "created_at": "2026-10-02T13:27:57.784756+00:00",
+  "settings_snapshot": {
+    "openai_model": "gpt-5-mini",
+    "max_output_tokens": 4096,
+    "max_model_calls": 10,
+    "max_tool_calls": 10,
+    "tavily_max_results": 5,
+    "openai_reasoning_effort": "low"
+  },
+  "runs": [
+    {
+      "query_id": "bengaluru-ai-engineer-one",
+      "query": "One AI Engineer job in Bengaluru at NVIDIA. Return only strong matches with source URLs. Do not ask clarifying questions.",
+      "structural_pass": true,
+      "structural_checks": [
+        {
+          "name": "match_count_within_limit",
+          "passed": true,
+          "detail": "2 matches (max 5)"
+        },
+        {
+          "name": "each_match_has_http_source",
+          "passed": true,
+          "detail": "all URLs valid"
+        },
+        {
+          "name": "no_duplicate_source_urls",
+          "passed": true,
+          "detail": "0 duplicate URL(s) after normalization"
+        },
+        {
+          "name": "required_fields_present",
+          "passed": true,
+          "detail": "ok"
+        },
+        {
+          "name": "query_summary_present",
+          "passed": true,
+          "detail": "Search for NVIDIA AI-related engineering roles located in Bengaluru (Bangalore),..."
+        }
+      ],
+      "heuristic_checks": [
+        {
+          "name": "official_career_page_ratio",
+          "passed": true,
+          "detail": "2/2 URLs look like company career pages"
+        }
+      ],
+      "metrics": {
+        "latency_seconds": 14.41,
+        "agent_model_calls": 2,
+        "agent_tool_calls": 1,
+        "fallback_synthesis_calls": 0,
+        "used_fallback_synthesis": false,
+        "total_input_tokens": 5113,
+        "total_output_tokens": 780,
+        "total_tokens": 5893,
+        "approximate_openai_usd_agent_loop_only": 0.002838,
+        "cost_note": "USD estimate covers token usage on agent-loop AIMessages only; fallback synthesis and Tavily are extra. Set OPENAI_INPUT_USD_PER_1M in .env for estimates."
+      },
+      "response": {
+        "query_summary": "Search for NVIDIA AI-related engineering roles located in Bengaluru (Bangalore), India; restricted to NVIDIA career pages and public job listings.",
+        "matches": [
+          {
+            "title": "AI Developer Technology Engineer",
+            "company": "NVIDIA Corporation",
+            "location": "Bengaluru, India (DevTech team) \u2014 listing on NVIDIA jobs site",
+            "source_url": "https://jobs.nvidia.com/careers/job/893392069435?domain=nvidia.com&hl=zh-TW",
+            "match_reason": "Role explicitly titled 'AI Developer Technology Engineer' on NVIDIA's careers site and describes an AI-focused developer/engineer position; listing is hosted on NVIDIA's official job site and indicates Bengaluru/India DevTech team.",
+            "uncertain_fields": [
+              "Exact on-site vs remote/Hybrid work policy (not clearly stated in snippet)",
+              "Seniority/level band (the listing text may indicate level but full details require viewing the full posting)",
+              "Job posting date / current availability (may have changed since indexing)"
+            ]
+          },
+          {
+            "title": "Senior Software Engineer, ML",
+            "company": "NVIDIA Corporation",
+            "location": "India \u2014 Bengaluru (job page shows India/Bengaluru)",
+            "source_url": "https://jobs.nvidia.com/careers/job/893395968502-senior-software-engineer-ml-india-bengaluru?domain=nvidia.com",
+            "match_reason": "Machine-learning-focused engineering role (ML) listed on NVIDIA's careers site with Bengaluru, India location; strong match for AI engineering work at NVIDIA in Bengaluru.",
+            "uncertain_fields": [
+              "Title is 'Senior Software Engineer, ML' rather than 'AI Engineer' (but responsibilities are ML/AI-related)",
+              "Exact team (product area) and on-site/remote details not fully visible in the search snippet",
+              "Current posting status (may have been filled or updated)"
+            ]
+          }
+        ],
+        "notes": "Search restricted to NVIDIA's official careers site (nvidia.com). I returned strong matches that are AI/ML engineering roles in Bengaluru. If you want I can open each listing to extract required qualifications, responsibilities, and application instructions, or broaden the search to related NVIDIA AI roles in India outside nvidia.com."
+      },
+      "manual_review": {
+        "relevant_matches": null,
+        "listing_likely_open": null,
+        "source_supports_each_field": null,
+        "sensible_tool_choices": null,
+        "search_efficiency": null,
+        "grounded_in_evidence_not_full_jd": null,
+        "reviewer_notes": ""
+      },
+      "langsmith": {
+        "project": "job-research-agent",
+        "hint": "Open this run in LangSmith and paste run URL into manual_review.reviewer_notes"
+      }
+    },
+    {
+      "query_id": "bengaluru-lead-ai",
+      "query": "Lead AI Engineer roles in Bengaluru with company career page links.",
+      "structural_pass": true,
+      "structural_checks": [
+        {
+          "name": "match_count_within_limit",
+          "passed": true,
+          "detail": "4 matches (max 5)"
+        },
+        {
+          "name": "each_match_has_http_source",
+          "passed": true,
+          "detail": "all URLs valid"
+        },
+        {
+          "name": "no_duplicate_source_urls",
+          "passed": true,
+          "detail": "0 duplicate URL(s) after normalization"
+        },
+        {
+          "name": "required_fields_present",
+          "passed": true,
+          "detail": "ok"
+        },
+        {
+          "name": "query_summary_present",
+          "passed": true,
+          "detail": "Search for Lead AI Engineer roles in Bengaluru (Bangalore) using company career ..."
+        }
+      ],
+      "heuristic_checks": [
+        {
+          "name": "official_career_page_ratio",
+          "passed": true,
+          "detail": "4/4 URLs look like company career pages"
+        }
+      ],
+      "metrics": {
+        "latency_seconds": 17.48,
+        "agent_model_calls": 2,
+        "agent_tool_calls": 1,
+        "fallback_synthesis_calls": 0,
+        "used_fallback_synthesis": false,
+        "total_input_tokens": 5003,
+        "total_output_tokens": 1135,
+        "total_tokens": 6138,
+        "approximate_openai_usd_agent_loop_only": 0.003521,
+        "cost_note": "USD estimate covers token usage on agent-loop AIMessages only; fallback synthesis and Tavily are extra. Set OPENAI_INPUT_USD_PER_1M in .env for estimates."
+      },
+      "response": {
+        "query_summary": "Search for Lead AI Engineer roles in Bengaluru (Bangalore) using company career pages and major corporate job sites; exclude LinkedIn. Returned up to five strong matches from company career pages where possible.",
+        "matches": [
+          {
+            "title": "Lead AI Engineer",
+            "company": "Capital One",
+            "location": "Bengaluru, India",
+            "source_url": "https://www.capitalonecareers.com/job/bengaluru/lead-ai-engineer/1732/98563866192",
+            "match_reason": "Company career page listing for a Lead AI Engineer role located in Bengaluru; job description references AI/ML, LLMs, production ML systems and matches the requested title and location.",
+            "uncertain_fields": [
+              "salary",
+              "remote/hybrid policy (page lists Bengaluru but may allow hybrid/remote)",
+              "visa/sponsorship details",
+              "application deadline or posting date (may change)"
+            ]
+          },
+          {
+            "title": "Lead AI Engineer",
+            "company": "Baker Hughes",
+            "location": "Bangalore (Karn\u0101taka), India",
+            "source_url": "https://careers.bakerhughes.com/global/en/job/R165592/Lead-AI-Engineer",
+            "match_reason": "Baker Hughes company careers page shows a Lead AI Engineer role in Bangalore, matching title and location and describing AI services and production AI systems work.",
+            "uncertain_fields": [
+              "salary",
+              "remote/hybrid policy",
+              "required years of experience and exact team reporting (summary on page may omit some specifics)"
+            ]
+          },
+          {
+            "title": "Senior / Lead AI Engineer (listed as Senior Lead-AI Engineer)",
+            "company": "GSK",
+            "location": "Bengaluru, India",
+            "source_url": "https://jobs.gsk.com/in/en/job/438250/Senior-Lead-AI-Engineer",
+            "match_reason": "GSK jobs site lists a Senior/Lead AI Engineer role in Bengaluru; the role focuses on agent reliability, observability and other AI-engineering responsibilities consistent with a lead-level AI engineering position.",
+            "uncertain_fields": [
+              "exact seniority label (site shows 'Senior-Lead-AI Engineer' which may differ from 'Lead AI Engineer')",
+              "salary",
+              "remote/hybrid policy",
+              "application status (open/closed) at time of viewing"
+            ]
+          },
+          {
+            "title": "Lead Software Engineer - AI Red Team",
+            "company": "Soci\u00e9t\u00e9 G\u00e9n\u00e9rale (SG Global Solution Centre)",
+            "location": "Bangalore, India (Hybrid)",
+            "source_url": "https://careers.societegenerale.com/en/job-offers/lead-software-engineer-ai-red-team-26000GRY-en",
+            "match_reason": "Company career page for Soci\u00e9t\u00e9 G\u00e9n\u00e9rale lists a lead-level AI engineering role in Bangalore focused on AI/agentic solutions and LLM tooling; title is 'Lead Software Engineer - AI Red Team' which is a close match for a lead AI engineering position in Bengaluru.",
+            "uncertain_fields": [
+              "exact title match (role is 'Lead Software Engineer - AI Red Team' rather than 'Lead AI Engineer')",
+              "salary",
+              "team reporting and seniority band details"
+            ]
+          }
+        ],
+        "notes": "I prioritized company career pages and excluded LinkedIn. There may be additional Lead AI Engineer roles at startups or smaller companies whose career pages were not discovered in this search; if you want, I can expand to include major job boards or filter by remote/hybrid, required experience, or specific tech stack (e.g., PyTorch, Hugging Face). Also note that salary, visa/sponsorship, and up-to-the-minute application status are typically not shown on these pages and should be confirmed on the employer site or during application."
+      },
+      "manual_review": {
+        "relevant_matches": null,
+        "listing_likely_open": null,
+        "source_supports_each_field": null,
+        "sensible_tool_choices": null,
+        "search_efficiency": null,
+        "grounded_in_evidence_not_full_jd": null,
+        "reviewer_notes": ""
+      },
+      "langsmith": {
+        "project": "job-research-agent",
+        "hint": "Open this run in LangSmith and paste run URL into manual_review.reviewer_notes"
+      }
+    },
+    {
+      "query_id": "remote-india-ml",
+      "query": "Remote ML Engineer jobs based in India; prefer official company career pages.",
+      "structural_pass": true,
+      "structural_checks": [
+        {
+          "name": "match_count_within_limit",
+          "passed": true,
+          "detail": "5 matches (max 5)"
+        },
+        {
+          "name": "each_match_has_http_source",
+          "passed": true,
+          "detail": "all URLs valid"
+        },
+        {
+          "name": "no_duplicate_source_urls",
+          "passed": true,
+          "detail": "0 duplicate URL(s) after normalization"
+        },
+        {
+          "name": "required_fields_present",
+          "passed": true,
+          "detail": "ok"
+        },
+        {
+          "name": "query_summary_present",
+          "passed": true,
+          "detail": "Looking for remote Machine Learning Engineer roles that accept candidates based ..."
+        }
+      ],
+      "heuristic_checks": [
+        {
+          "name": "official_career_page_ratio",
+          "passed": true,
+          "detail": "5/5 URLs look like company career pages"
+        }
+      ],
+      "metrics": {
+        "latency_seconds": 42.06,
+        "agent_model_calls": 6,
+        "agent_tool_calls": 5,
+        "fallback_synthesis_calls": 0,
+        "used_fallback_synthesis": false,
+        "total_input_tokens": 43183,
+        "total_output_tokens": 1998,
+        "total_tokens": 45181,
+        "approximate_openai_usd_agent_loop_only": 0.014792,
+        "cost_note": "USD estimate covers token usage on agent-loop AIMessages only; fallback synthesis and Tavily are extra. Set OPENAI_INPUT_USD_PER_1M in .env for estimates."
+      },
+      "response": {
+        "query_summary": "Looking for remote Machine Learning Engineer roles that accept candidates based in India; prefer official company career pages (avoid LinkedIn). Search prioritized company career pages and reputable job/posting sites and excluded LinkedIn.",
+        "matches": [
+          {
+            "title": "Machine Learning (ML) Engineer Intern - (Paid - India/Remote)",
+            "company": "Peakflo",
+            "location": "Remote \u2014 India (internship posted as India/Remote)",
+            "source_url": "https://www.ycombinator.com/companies/peakflo/jobs/I4Ehwpd-machine-learning-ml-engineer-intern-paid-india-remote",
+            "match_reason": "Role explicitly described as India/Remote and is a Machine Learning/ML Engineer internship listing that targets candidates in India.",
+            "uncertain_fields": [
+              "This is an internship (not necessarily full-time ML Engineer) \u2014 user asked for ML Engineer roles; internship level may not match.",
+              "The URL is a Y Combinator jobs listing (third-party page) rather than the company's official careers page.",
+              "Compensation, duration, and hiring status may have changed since posting."
+            ]
+          },
+          {
+            "title": "Machine Learning Engineer - India",
+            "company": "Mercor",
+            "location": "India (hourly / contract; listed as remote contractor eligible for India)",
+            "source_url": "https://work.mercor.com/jobs/list_AAABmjiUIi0G5k4QxsdNur1T/machine-learning-engineer-india",
+            "match_reason": "Listing explicitly targets ML Engineers and states India location / remote contractor model for ML engineering work.",
+            "uncertain_fields": [
+              "work.mercor.com appears to be Mercor's jobs portal but this listing page may be an external ATS \u2014 confirm on Mercor's official careers page if present.",
+              "Employment type shown as hourly/contract \u2014 user may prefer full-time; not explicitly stated as permanent.",
+              "Current hiring status may have changed."
+            ]
+          },
+          {
+            "title": "Machine Learning Engineer (Remote, India listed in target regions)",
+            "company": "Norstella (via company careers page)",
+            "location": "Remote \u2014 India (role listed as remote and open to India)",
+            "source_url": "https://careers.norstella.com/jobs/17972065-machine-learning-engineer",
+            "match_reason": "Norstella careers site contains a Machine Learning Engineer role that names Remote and India in the location snippet.",
+            "uncertain_fields": [
+              "Listing snippet on the careers site is brief; details such as seniority, full-time vs contract, visa/relocation policy are not visible in the snippet.",
+              "Need to confirm whether the role is permanently remote and open to applicants located in India (careers page indicates remote+India but full details not shown)."
+            ]
+          },
+          {
+            "title": "Multiple Remote Machine Learning Engineer / ML roles (India listed among remote-eligible countries)",
+            "company": "OpenTrain AI (aggregator of remote ML roles)",
+            "location": "Remote \u2014 India (aggregator shows multiple remote ML roles that accept India)",
+            "source_url": "https://www.opentrain.ai/jobs/domain/machine-learning",
+            "match_reason": "OpenTrain lists remote Machine Learning Engineer roles that specify work with candidates in India; useful to find contract/part-time remote positions targeting India.",
+            "uncertain_fields": [
+              "OpenTrain is an aggregator/marketplace rather than an official company career page \u2014 user preferred official career pages.",
+              "Individual listings on OpenTrain may be contract/part-time and vary by company; confirm details on the originating company's official careers page after identifying a specific listing."
+            ]
+          },
+          {
+            "title": "Sr Machine Learning Engineer (MLOps) - Remote India",
+            "company": "Dynatron (listed via ProductBased job aggregator)",
+            "location": "Remote \u2014 India (role title includes 'Remote India')",
+            "source_url": "https://www.productbased.in/jobs/ai-engineer",
+            "match_reason": "Aggregator ProductBased lists a Senior ML (MLOps) role explicitly labeled Remote India, pointing to a company hiring remotely for India.",
+            "uncertain_fields": [
+              "productbased.in is an aggregator; the original company careers page / canonical job URL is not provided in the snippet \u2014 must follow aggregator link to the employer.",
+              "Seniority is senior \u2014 may not match all candidate experience levels. Current availability and hiring details should be verified on employer's site."
+            ]
+          }
+        ],
+        "notes": "I prioritized evidence that explicitly mentioned 'Remote' and India. Many current remote ML positions for India are posted on company career pages, company ATS portals, or reputable aggregators. Where I found only aggregator or third\u2011party postings, I flagged that in uncertain_fields as you requested official career pages when possible. If you want, I can (1) follow any single match and try to locate that role on the company's official careers page, or (2) run a deeper site-restricted search for specific companies you prefer (e.g., Hugging Face, Coinbase, OpenAI, Google, Amazon) to find official remote-India ML openings."
+      },
+      "manual_review": {
+        "relevant_matches": null,
+        "listing_likely_open": null,
+        "source_supports_each_field": null,
+        "sensible_tool_choices": null,
+        "search_efficiency": null,
+        "grounded_in_evidence_not_full_jd": null,
+        "reviewer_notes": ""
+      },
+      "langsmith": {
+        "project": "job-research-agent",
+        "hint": "Open this run in LangSmith and paste run URL into manual_review.reviewer_notes"
+      }
+    },
+    {
+      "query_id": "hyderabad-data-scientist",
+      "query": "Senior Data Scientist openings in Hyderabad, up to three matches.",
+      "structural_pass": true,
+      "structural_checks": [
+        {
+          "name": "match_count_within_limit",
+          "passed": true,
+          "detail": "3 matches (max 5)"
+        },
+        {
+          "name": "each_match_has_http_source",
+          "passed": true,
+          "detail": "all URLs valid"
+        },
+        {
+          "name": "no_duplicate_source_urls",
+          "passed": true,
+          "detail": "0 duplicate URL(s) after normalization"
+        },
+        {
+          "name": "required_fields_present",
+          "passed": true,
+          "detail": "ok"
+        },
+        {
+          "name": "query_summary_present",
+          "passed": true,
+          "detail": "Search for Senior Data Scientist roles located in Hyderabad, India (exclude Link..."
+        }
+      ],
+      "heuristic_checks": [
+        {
+          "name": "official_career_page_ratio",
+          "passed": true,
+          "detail": "2/3 URLs look like company career pages"
+        }
+      ],
+      "metrics": {
+        "latency_seconds": 20.89,
+        "agent_model_calls": 3,
+        "agent_tool_calls": 2,
+        "fallback_synthesis_calls": 0,
+        "used_fallback_synthesis": false,
+        "total_input_tokens": 7431,
+        "total_output_tokens": 871,
+        "total_tokens": 8302,
+        "approximate_openai_usd_agent_loop_only": 0.0036,
+        "cost_note": "USD estimate covers token usage on agent-loop AIMessages only; fallback synthesis and Tavily are extra. Set OPENAI_INPUT_USD_PER_1M in .env for estimates."
+      },
+      "response": {
+        "query_summary": "Search for Senior Data Scientist roles located in Hyderabad, India (exclude LinkedIn). Returned up to three active public job listings on company career pages or public job boards.",
+        "matches": [
+          {
+            "title": "Senior Data Scientist",
+            "company": "HCLTech",
+            "location": "Hyderabad, Telangana, India",
+            "source_url": "https://careers.hcltech.com/job/Senior-Data-Scientist/86052-en_US",
+            "match_reason": "Company career page listing titled 'Senior Data Scientist' explicitly located in Hyderabad and describes senior-level data science responsibilities.",
+            "uncertain_fields": [
+              "salary / compensation not listed on page",
+              "exact required years of experience not visible in search snippet",
+              "remote / hybrid policy not specified in snippet"
+            ]
+          },
+          {
+            "title": "Senior Data Scientist - Hyderabad",
+            "company": "Warner Bros. Discovery",
+            "location": "Hyderabad, Telangana, India",
+            "source_url": "https://careers.wbd.com/global/en/job/R000106157/Senior-Data-Scientist-Hyderabad",
+            "match_reason": "Official Warner Bros. Discovery careers posting for 'Senior Data Scientist' with Hyderabad location.",
+            "uncertain_fields": [
+              "salary / compensation not shown in listing",
+              "full details of required technical stack or years of experience not visible in snippet"
+            ]
+          },
+          {
+            "title": "Senior Data Scientist",
+            "company": "Koantek (job posted on Built In / job board)",
+            "location": "Hyderabad / Telangana (remote option listed as Remote in posting)",
+            "source_url": "https://builtin.com/job/senior-data-scientist/11445979",
+            "match_reason": "Public job posting for a Senior Data Scientist listing Hyderabad / Telangana and notes remote work possibility; senior-level role matching the title and location requirement.",
+            "uncertain_fields": [
+              "posting is on a job board (Built In) not the company's official careers page",
+              "company-specific compensation and interview process not shown",
+              "exact on-site vs remote split and required years of experience need confirmation"
+            ]
+          }
+        ],
+        "notes": "I excluded LinkedIn results per your request. I prioritized company career pages (HCLTech, Warner Bros. Discovery) and included one strong public job-board posting. If you want, I can (1) expand to more listings, (2) open each posting and extract details (experience, skills, salary if present), or (3) filter for remote-only or particular tech stack requirements."
+      },
+      "manual_review": {
+        "relevant_matches": null,
+        "listing_likely_open": null,
+        "source_supports_each_field": null,
+        "sensible_tool_choices": null,
+        "search_efficiency": null,
+        "grounded_in_evidence_not_full_jd": null,
+        "reviewer_notes": ""
+      },
+      "langsmith": {
+        "project": "job-research-agent",
+        "hint": "Open this run in LangSmith and paste run URL into manual_review.reviewer_notes"
+      }
+    },
+    {
+      "query_id": "pune-genai",
+      "query": "Generative AI engineer jobs in Pune with cited URLs.",
+      "structural_pass": true,
+      "structural_checks": [
+        {
+          "name": "match_count_within_limit",
+          "passed": true,
+          "detail": "3 matches (max 5)"
+        },
+        {
+          "name": "each_match_has_http_source",
+          "passed": true,
+          "detail": "all URLs valid"
+        },
+        {
+          "name": "no_duplicate_source_urls",
+          "passed": true,
+          "detail": "0 duplicate URL(s) after normalization"
+        },
+        {
+          "name": "required_fields_present",
+          "passed": true,
+          "detail": "ok"
+        },
+        {
+          "name": "query_summary_present",
+          "passed": true,
+          "detail": "Role: Generative AI / GenAI Engineer (including Senior/AI Engineer roles focused..."
+        }
+      ],
+      "heuristic_checks": [
+        {
+          "name": "official_career_page_ratio",
+          "passed": false,
+          "detail": "1/3 URLs look like company career pages"
+        }
+      ],
+      "metrics": {
+        "latency_seconds": 22.01,
+        "agent_model_calls": 4,
+        "agent_tool_calls": 3,
+        "fallback_synthesis_calls": 0,
+        "used_fallback_synthesis": false,
+        "total_input_tokens": 19739,
+        "total_output_tokens": 1421,
+        "total_tokens": 21160,
+        "approximate_openai_usd_agent_loop_only": 0.007777,
+        "cost_note": "USD estimate covers token usage on agent-loop AIMessages only; fallback synthesis and Tavily are extra. Set OPENAI_INPUT_USD_PER_1M in .env for estimates."
+      },
+      "response": {
+        "query_summary": "Role: Generative AI / GenAI Engineer (including Senior/AI Engineer roles focused on generative models, RAG, LLMs, agentic AI). Location: Pune, India. Constraints: public job listings (career pages preferred), exclude LinkedIn.",
+        "matches": [
+          {
+            "title": "Sr AI Engineer (Generative AI & Pharmacovigilance)",
+            "company": "EVERSANA",
+            "location": "Pune, India (India / Pune referenced in listing)",
+            "source_url": "https://jobs.smartrecruiters.com/EVERSANA1/744000144249669-sr-ai-engineer-generative-ai-pharmacovigilance-",
+            "match_reason": "Role explicitly named 'Generative AI' and 'Sr AI Engineer', lists LLMs, RAG, agentic AI, building GenAI products \u2014 matches Generative AI engineer in Pune.",
+            "uncertain_fields": [
+              "Exact onsite/hybrid/remote work policy for the Pune role (listing references India but may allow remote/other-city hires)",
+              "Salary / compensation (not provided on posting)",
+              "Current open/active status could change (posting date not asserted here)"
+            ]
+          },
+          {
+            "title": "Generative AI Engineer (senior / agentic & generative AI roles listed)",
+            "company": "Tata Consultancy Services (TCS)",
+            "location": "Pune (Hinjawadi / Pune location referenced in listing metadata)",
+            "source_url": "https://www.foundit.in/job/generative-ai-engineer-tata-consultancy-services-pune-61159010",
+            "match_reason": "Listing for Generative AI Engineer / related GenAI roles at TCS explicitly mentions Pune as a location and GenAI/agentic AI skills (LangChain, RAG, LLMs) \u2014 a strong match for GenAI engineer in Pune.",
+            "uncertain_fields": [
+              "This is a third-party job aggregator copy of the TCS posting; the canonical TCS careers page URL for this exact opening was not found in this search result",
+              "Salary / compensation (not provided on aggregator)",
+              "Exact job-id / posting date may differ on TCS career site"
+            ]
+          },
+          {
+            "title": "SAP BTP Generative AI Engineer (role mentions Generative AI / RAG / agents)",
+            "company": "Tata Consultancy Services (TCS)",
+            "location": "Hyderabad, Bengaluru, Pune (Pune included in listing locations)",
+            "source_url": "https://www.naukri.com/job-listings-sap-btp-generative-ai-engineer-xp-6-12-yrs-tata-consultancy-services-hyderabad-pune-bengaluru-6-to-11-years-310826027562",
+            "match_reason": "Job explicitly titled 'SAP BTP Generative AI Engineer' and lists Generative AI, RAG, agent-based architectures; Pune is included among location options.",
+            "uncertain_fields": [
+              "Naukri is an aggregator \u2014 canonical TCS careers page for this specific posting not included here",
+              "Compensation and exact onsite/hybrid requirements not stated in the aggregated snippet",
+              "Posting may be part of a broader candidate pool for multiple cities (Pune may be one of several locations)"
+            ]
+          }
+        ],
+        "notes": "I prioritized company or official recruiter pages when available (SmartRecruiters for EVERSANA). Several Pune GenAI openings are listed on job boards/aggregators (Naukri, Foundit). If you want, I can (1) expand the search to include additional companies (PwC, Exela, Einfochips, startups) and developer career pages, (2) try to locate the canonical company careers pages for the TCS postings, or (3) search for more recent/active postings within a specific time range."
+      },
+      "manual_review": {
+        "relevant_matches": null,
+        "listing_likely_open": null,
+        "source_supports_each_field": null,
+        "sensible_tool_choices": null,
+        "search_efficiency": null,
+        "grounded_in_evidence_not_full_jd": null,
+        "reviewer_notes": ""
+      },
+      "langsmith": {
+        "project": "job-research-agent",
+        "hint": "Open this run in LangSmith and paste run URL into manual_review.reviewer_notes"
+      }
+    }
+  ],
+  "next_steps": [
+    "Fill manual_review for each run (see eval/MANUAL_REVIEW_RUBRIC.md).",
+    "Save at least one weak run under eval/regression/ with --save-regression."
+  ]
+}

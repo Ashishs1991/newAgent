@@ -17,6 +17,12 @@ def _optional_int(name: str, default: int) -> int:
         return default
     return int(raw)
 
+def _optional_float(name: str) -> float | None:
+    raw = os.getenv(name)
+    if raw is None or raw.strip() == "":
+        return None
+    return float(raw)
+
 
 @dataclass(frozen=True)
 class Settings:
@@ -30,6 +36,8 @@ class Settings:
     max_tool_calls: int
     tavily_max_results: int
     openai_reasoning_effort: str | None
+    openai_input_usd_per_1m: float | None
+    openai_output_usd_per_1m: float | None
     langsmith_tracing: bool
     langsmith_api_key: str | None
     langsmith_project: str
@@ -53,6 +61,8 @@ class Settings:
             max_tool_calls=_optional_int("MAX_TOOL_CALLS", 2),
             tavily_max_results=_optional_int("TAVILY_MAX_RESULTS", 3),
             openai_reasoning_effort=openai_reasoning_effort,
+            openai_input_usd_per_1m=_optional_float("OPENAI_INPUT_USD_PER_1M"),
+            openai_output_usd_per_1m=_optional_float("OPENAI_OUTPUT_USD_PER_1M"),
             langsmith_tracing=langsmith_tracing,
             langsmith_api_key=os.getenv("LANGSMITH_API_KEY"),
             langsmith_project=os.getenv("LANGSMITH_PROJECT", "job-research-agent"),

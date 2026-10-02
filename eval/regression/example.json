@@ -1,0 +1,11 @@
+{
+  "_comment": "Template for a saved regression run. Replace with real output from run_baseline.py.",
+  "query_id": "example-query-id",
+  "query": "Example user query",
+  "structural_pass": false,
+  "failure_reason": "Describe structural or quality failure",
+  "manual_review": {
+    "relevant_matches": "fail",
+    "reviewer_notes": "Link to LangSmith trace URL"
+  }
+}

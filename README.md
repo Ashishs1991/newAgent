@@ -40,6 +40,19 @@ python eval/run_eval.py --live --limit 1
 python eval/run_eval.py --live --query-id bengaluru-ai-engineer-one
 ```
 
+### Baseline before Step 3 (live, uses credits)
+
+Records structural checks, metrics (latency, model/tool calls, tokens), and empty
+`manual_review` fields for you to score using `eval/MANUAL_REVIEW_RUBRIC.md`.
+
+```bash
+python eval/run_baseline.py --limit 5
+python eval/run_baseline.py --limit 1 --query-id bengaluru-lead-ai \
+  --save-regression bengaluru-lead-ai
+```
+
+Output: `eval/baseline/runs/baseline_<timestamp>.json`
+
 ```bash
 python -c "from tests.test_evaluation import test_eval_passes_for_valid_response, test_eval_fails_on_duplicate_urls; test_eval_passes_for_valid_response(); test_eval_fails_on_duplicate_urls()"
 ```

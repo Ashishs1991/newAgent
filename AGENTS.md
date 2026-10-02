@@ -55,6 +55,32 @@ The agent currently has:
 The output-token limit is not yet an exact whole-run token budget. Whole-run usage
 accounting should be added as a later learning increment using actual usage metadata.
 
+### Structured-output fallback and middleware limits
+
+`JobResearchAgent._finalize_from_transcript()` in `job_research/agent.py` may perform
+**one additional OpenAI call outside the LangGraph agent loop** when the loop ends
+without `structured_response`. That call is **not** counted by
+`ModelCallLimitMiddleware`. For this learning version that trade-off is acceptable,
+but it means **`MAX_MODEL_CALLS` is not a complete run-level model-call budget**.
+The same applies to whole-run token and cost totals when fallback runs: baseline
+metrics in `eval/run_baseline.py` sum usage on agent-loop `AIMessage` metadata only.
+Treat this as an intentional lesson before adding strict cost accounting.
+
+### Evaluation layers (before adding a second tool)
+
+1. **Structural** (`evaluate_response`) — automated: valid URLs, no duplicate URLs,
+   required fields, max result count.
+2. **Heuristic** (`evaluate_heuristics`) — automated hints: e.g. fraction of URLs that
+   look like company career pages (not LinkedIn).
+3. **Manual quality** (`eval/MANUAL_REVIEW_RUBRIC.md`) — human: relevance, listing still
+   open, evidence supports fields, sensible searches, grounding vs full JD.
+4. **Baseline** (`python eval/run_baseline.py`) — run three to five live queries, save
+   JSON under `eval/baseline/runs/`, fill `manual_review`, save at least one failure
+   under `eval/regression/`.
+
+Do **not** add an LLM-as-judge for quality until structural baselines and manual rubric
+are understood. Model-based judging is planned for Step 6.
+
 ## What the learner should understand from Version 0
 
 - A tool is an application capability exposed to the model with a schema.
@@ -97,6 +123,7 @@ Follow this order unless the learner explicitly changes it:
    - Create about ten representative test queries.
    - Measure source presence, result count, duplicates, limit compliance, and
      manually judged relevance.
+   - Record a live baseline (`eval/run_baseline.py`) before Step 3.
 
 3. **A second tool**
    - Add a narrow tool for reading a selected company job page when search snippets
@@ -152,8 +179,14 @@ Optional environment variables:
 
 ```text
 OPENAI_MODEL=gpt-5-mini
-MAX_OUTPUT_TOKENS=1200
-LANGSMITH_TRACING=true
+MAX_OUTPUT_TOKENS=4096
+OPENAI_REASONING_EFFORT=low
+MAX_MODEL_CALLS=5
+MAX_TOOL_CALLS=2
+TAVILY_MAX_RESULTS=3
+# Optional — approximate OpenAI USD for eval/baseline metrics (agent loop only)
+# OPENAI_INPUT_USD_PER_1M=0.25
+# OPENAI_OUTPUT_USD_PER_1M=2.00
 LANGSMITH_API_KEY=...
 LANGSMITH_PROJECT=job-research-agent
 ```
