@@ -29,6 +29,7 @@ class Settings:
     max_model_calls: int
     max_tool_calls: int
     tavily_max_results: int
+    openai_reasoning_effort: str | None
     langsmith_tracing: bool
     langsmith_api_key: str | None
     langsmith_project: str
@@ -40,14 +41,18 @@ class Settings:
         tracing_raw = os.getenv("LANGSMITH_TRACING", "false").strip().lower()
         langsmith_tracing = tracing_raw in {"1", "true", "yes", "on"}
 
+        reasoning_raw = os.getenv("OPENAI_REASONING_EFFORT", "low").strip()
+        openai_reasoning_effort = reasoning_raw if reasoning_raw else None
+
         return cls(
             openai_api_key=_require("OPENAI_API_KEY"),
             tavily_api_key=_require("TAVILY_API_KEY"),
             openai_model=os.getenv("OPENAI_MODEL", "gpt-5-mini"),
-            max_output_tokens=_optional_int("MAX_OUTPUT_TOKENS", 1200),
-            max_model_calls=_optional_int("MAX_MODEL_CALLS", 4),
-            max_tool_calls=_optional_int("MAX_TOOL_CALLS", 3),
-            tavily_max_results=_optional_int("TAVILY_MAX_RESULTS", 5),
+            max_output_tokens=_optional_int("MAX_OUTPUT_TOKENS", 4096),
+            max_model_calls=_optional_int("MAX_MODEL_CALLS", 5),
+            max_tool_calls=_optional_int("MAX_TOOL_CALLS", 2),
+            tavily_max_results=_optional_int("TAVILY_MAX_RESULTS", 3),
+            openai_reasoning_effort=openai_reasoning_effort,
             langsmith_tracing=langsmith_tracing,
             langsmith_api_key=os.getenv("LANGSMITH_API_KEY"),
             langsmith_project=os.getenv("LANGSMITH_PROJECT", "job-research-agent"),

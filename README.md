@@ -53,9 +53,9 @@ request -> model chooses a search -> tool returns evidence -> model decides
 whether to search again -> final cited answer
 ```
 
-The code hard-limits each run to four model calls, three search calls, and 1,200
-tokens per model response. `MAX_OUTPUT_TOKENS` changes the per-response limit; it
-is not a whole-run token budget.
+The code hard-limits each run (defaults in `.env.example`: five model calls, two
+search calls, 1,200 tokens per model response). Structured output may need one extra
+model turn after Tavily; if limits are too low, the agent stops before JSON is ready.
 
 ## Learning increments
 

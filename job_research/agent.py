@@ -1,5 +1,6 @@
 from langchain.agents import create_agent
 from langchain.agents.middleware import ModelCallLimitMiddleware, ToolCallLimitMiddleware
+from langchain_core.messages import AnyMessage, HumanMessage
 from langchain_openai import ChatOpenAI
 from langchain_tavily import TavilySearch
 
@@ -15,12 +16,15 @@ class JobResearchAgent:
         self._settings = settings
 
     def create_model(self) -> ChatOpenAI:
-        return ChatOpenAI(
-            model=self._settings.openai_model,
-            temperature=0,
-            max_tokens=self._settings.max_output_tokens,
-            api_key=self._settings.openai_api_key,
-        )
+        kwargs: dict = {
+            "model": self._settings.openai_model,
+            "temperature": 0,
+            "max_tokens": self._settings.max_output_tokens,
+            "api_key": self._settings.openai_api_key,
+        }
+        if self._settings.openai_reasoning_effort:
+            kwargs["reasoning_effort"] = self._settings.openai_reasoning_effort
+        return ChatOpenAI(**kwargs)
 
     def create_tools(self) -> list:
         search = TavilySearch(
@@ -48,6 +52,27 @@ class JobResearchAgent:
             response_format=JobSearchResponse,
         )
 
+    @staticmethod
+    def _coerce_structured(structured: object) -> JobSearchResponse:
+        if isinstance(structured, JobSearchResponse):
+            return structured
+        return JobSearchResponse.model_validate(structured)
+
+    def _finalize_from_transcript(self, messages: list[AnyMessage]) -> JobSearchResponse:
+        """Application fallback: one extra structured call if the loop ended without schema."""
+        model = self.create_model().with_structured_output(JobSearchResponse)
+        synthesis = [
+            *messages,
+            HumanMessage(
+                content=(
+                    "Using only the Tavily tool results and messages above, produce the "
+                    "final JobSearchResponse JSON. Do not invent jobs; every match needs "
+                    "a source_url that appeared in the search evidence."
+                )
+            ),
+        ]
+        return model.invoke(synthesis)
+
     def run(self, user_message: str) -> JobSearchResponse:
         self._settings.apply_langsmith_env()
         agent = self.create_langchain_agent()
@@ -55,11 +80,18 @@ class JobResearchAgent:
             {"messages": [{"role": "user", "content": user_message}]}
         )
         structured = result.get("structured_response")
-        if structured is None:
+        if structured is not None:
+            return self._coerce_structured(structured)
+
+        messages = result.get("messages", [])
+        last_text = ""
+        if messages:
+            last_text = str(getattr(messages[-1], "content", ""))
+
+        if "limit" in last_text.lower() and "exceeded" in last_text.lower():
             raise RuntimeError(
-                "Agent finished without structured_response. "
-                "Check LangSmith trace for limit errors or schema validation failures."
+                "Agent hit MAX_MODEL_CALLS or MAX_TOOL_CALLS before structured output. "
+                f"In .env try MAX_MODEL_CALLS=5 and MAX_TOOL_CALLS=2. Last message: {last_text}"
             )
-        if isinstance(structured, JobSearchResponse):
-            return structured
-        return JobSearchResponse.model_validate(structured)
+
+        return self._finalize_from_transcript(messages)
