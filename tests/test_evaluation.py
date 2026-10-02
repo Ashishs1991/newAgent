@@ -1,5 +1,5 @@
 from job_research.evaluation import evaluate_response
-from job_research.schemas import JobMatch, JobSearchResponse
+from job_research.schema import JobMatch, JobSearchResponse
 
 
 def test_eval_passes_for_valid_response() -> None:

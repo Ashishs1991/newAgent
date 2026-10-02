@@ -14,7 +14,7 @@ if str(ROOT) not in sys.path:
 
 from job_research import JobResearchAgent, Settings
 from job_research.evaluation import evaluate_response
-from job_research.schemas import JobMatch, JobSearchResponse
+from job_research.schema import JobMatch, JobSearchResponse
 
 QUERIES_PATH = Path(__file__).resolve().parent / "queries.json"
 

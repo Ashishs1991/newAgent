@@ -5,7 +5,7 @@ from langchain_openai import ChatOpenAI
 from langchain_tavily import TavilySearch
 
 from job_research.prompts import load_system_prompt
-from job_research.schemas import JobSearchResponse
+from job_research.schema import JobSearchResponse
 from job_research.settings import Settings
 
 

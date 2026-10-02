@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from urllib.parse import urlparse
 
-from job_research.schemas import JobSearchResponse
+from job_research.schema import JobSearchResponse
 
 MAX_MATCHES = 5
 

@@ -18,7 +18,7 @@ python agent.py "Find Lead AI Engineer jobs in Bengaluru and explain the best ma
 ```
 
 Output is **validated JSON** (`query_summary`, `matches[]`, optional `notes`) defined in
-`job_research/schemas.py`. LangChain `response_format` enforces the schema on the
+`job_research/schema/`. LangChain `response_format` enforces the schema on the
 final structured result.
 
 Configuration loads from `.env` via `python-dotenv`. Copy `.env.example` for every
@@ -59,7 +59,7 @@ model turn after Tavily; if limits are too low, the agent stops before JSON is r
 
 ## Learning increments
 
-1. ~~Structured result schema and ten test queries~~ (see `job_research/schemas.py`, `eval/`).
+1. ~~Structured result schema and ten test queries~~ (see `job_research/schema/`, `eval/`).
 2. Add a second tool that reads a selected company job page.
 3. Replace the prebuilt loop with LangGraph nodes and explicit state.
 4. Add persistence, retries, human approval, and richer offline evaluations only when
