@@ -29,22 +29,24 @@ Build a job-research assistant that can:
 The project is for learning first. A useful personal job assistant is the resulting
 product, but feature count is not the goal.
 
-## Current milestone: Version 0
+## Current milestone: Version 0 + structured output (Step 2)
 
-The current code is a single read-only LangChain agent in `agent.py`.
+The read-only LangChain agent lives under `job_research/`; `agent.py` is the CLI.
 
 ```text
 user request
     -> model decides what to search
     -> Tavily search tool returns public-web evidence
     -> model decides whether another search is needed
-    -> agent returns up to five cited job matches
+    -> agent returns validated JobSearchResponse (Pydantic, max five matches)
 ```
 
 The agent currently has:
 
 - One tool: `TavilySearch`.
-- A maximum of four model calls per run.
+- Structured final output: `JobSearchResponse` / `JobMatch` via `response_format`.
+- Deterministic eval checks in `job_research/evaluation.py` and `eval/queries.json`.
+- A maximum of four model calls per run (configurable in `.env`).
 - A maximum of three tool calls per run.
 - A default maximum of 1,200 output tokens per model response.
 - Optional LangSmith tracing through environment variables.

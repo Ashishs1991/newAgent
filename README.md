@@ -17,8 +17,32 @@ cp .env.example .env
 python agent.py "Find Lead AI Engineer jobs in Bengaluru and explain the best matches"
 ```
 
+Output is **validated JSON** (`query_summary`, `matches[]`, optional `notes`) defined in
+`job_research/schemas.py`. LangChain `response_format` enforces the schema on the
+final structured result.
+
 Configuration loads from `.env` via `python-dotenv`. Copy `.env.example` for every
 variable name and default; never commit `.env`.
+
+## Evaluation (Step 2)
+
+Ten sample queries live in `eval/queries.json`. Deterministic checks (URL present,
+duplicate URLs, max five matches) are in `job_research/evaluation.py`.
+
+```bash
+# Free — no API calls
+python eval/run_eval.py --fixture
+
+# Live — defaults to 1 query to save credits
+python eval/run_eval.py --live --limit 1
+
+# One query by id
+python eval/run_eval.py --live --query-id bengaluru-ai-engineer-one
+```
+
+```bash
+python -c "from tests.test_evaluation import test_eval_passes_for_valid_response, test_eval_fails_on_duplicate_urls; test_eval_passes_for_valid_response(); test_eval_fails_on_duplicate_urls()"
+```
 
 ## What to watch
 
@@ -35,10 +59,10 @@ is not a whole-run token budget.
 
 ## Learning increments
 
-1. Add a structured result schema and test ten known job queries.
+1. ~~Structured result schema and ten test queries~~ (see `job_research/schemas.py`, `eval/`).
 2. Add a second tool that reads a selected company job page.
 3. Replace the prebuilt loop with LangGraph nodes and explicit state.
-4. Add persistence, retries, human approval, and offline evaluations only when
+4. Add persistence, retries, human approval, and richer offline evaluations only when
    the earlier version gives you a concrete failure to solve.
 
 Do not add LinkedIn scraping. LinkedIn restricts automated scraping, and its job

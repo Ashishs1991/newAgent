@@ -1,0 +1,42 @@
+[
+  {
+    "id": "bengaluru-ai-engineer-one",
+    "query": "One AI Engineer job in Bengaluru at NVIDIA. Return only strong matches with source URLs. Do not ask clarifying questions."
+  },
+  {
+    "id": "bengaluru-lead-ai",
+    "query": "Lead AI Engineer roles in Bengaluru with company career page links."
+  },
+  {
+    "id": "remote-india-ml",
+    "query": "Remote ML Engineer jobs based in India; prefer official company career pages."
+  },
+  {
+    "id": "hyderabad-data-scientist",
+    "query": "Senior Data Scientist openings in Hyderabad, up to three matches."
+  },
+  {
+    "id": "pune-genai",
+    "query": "Generative AI engineer jobs in Pune with cited URLs."
+  },
+  {
+    "id": "bangalore-staff-software-ai",
+    "query": "Staff software engineer working on AI platforms in Bangalore."
+  },
+  {
+    "id": "chennai-nlp",
+    "query": "NLP engineer jobs in Chennai from public job listings."
+  },
+  {
+    "id": "mumbai-ai-startup",
+    "query": "AI engineer roles at product companies in Mumbai; label uncertain facts."
+  },
+  {
+    "id": "delhi-ncr-research-scientist-ml",
+    "query": "Research scientist machine learning Delhi NCR, maximum two matches."
+  },
+  {
+    "id": "intern-ai-india",
+    "query": "AI engineer intern positions in India with application source URLs."
+  }
+]

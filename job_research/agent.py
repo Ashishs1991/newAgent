@@ -4,11 +4,12 @@ from langchain_openai import ChatOpenAI
 from langchain_tavily import TavilySearch
 
 from job_research.prompts import load_system_prompt
+from job_research.schemas import JobSearchResponse
 from job_research.settings import Settings
 
 
 class JobResearchAgent:
-    """Builds and runs the Version 0 read-only job research loop."""
+    """Builds and runs the read-only job research loop with structured output."""
 
     def __init__(self, settings: Settings) -> None:
         self._settings = settings
@@ -44,12 +45,21 @@ class JobResearchAgent:
                 ),
             ],
             system_prompt=load_system_prompt(),
+            response_format=JobSearchResponse,
         )
 
-    def run(self, user_message: str) -> str:
+    def run(self, user_message: str) -> JobSearchResponse:
         self._settings.apply_langsmith_env()
         agent = self.create_langchain_agent()
         result = agent.invoke(
             {"messages": [{"role": "user", "content": user_message}]}
         )
-        return result["messages"][-1].content
+        structured = result.get("structured_response")
+        if structured is None:
+            raise RuntimeError(
+                "Agent finished without structured_response. "
+                "Check LangSmith trace for limit errors or schema validation failures."
+            )
+        if isinstance(structured, JobSearchResponse):
+            return structured
+        return JobSearchResponse.model_validate(structured)
